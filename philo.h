@@ -20,6 +20,7 @@ typedef struct s_data
     long long       start_time;
     pthread_mutex_t *forks;
     pthread_mutex_t print_lock;
+    pthread_mutex_t state_lock;
     t_philo         *philos;
 }   t_data;
 
@@ -32,6 +33,7 @@ struct s_philo
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
     t_data          *data;
+    pthread_mutex_t meal_lock;
 };
 
 int                 ft_atoi(const char *str);

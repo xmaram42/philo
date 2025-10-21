@@ -58,6 +58,13 @@ int main(int ac, char **av)
         return (1);
     if (init_data(&data))
         return (printf("Error initializing data\n"), 1);
+		data.start_time = get_time_ms();
+    i = 0;
+    while (i < (int)data.n)
+    {
+        data.philos[i].last_meal = data.start_time;
+        i++;
+    }
     i = 0;
     while (i < (int)data.n)
     {
