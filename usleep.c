@@ -1,12 +1,11 @@
-
 #include "philo.h"
 
-int	usleep_ms(unsigned long long time)
+int usleep_ms(unsigned long long time)
 {
     unsigned long long start;
 
-    start = get_time_ms(); // to know the time now
+    start = get_time_ms();
     while (get_time_ms() - start < time)
-        usleep(500); // we can sleep mli of ms
+        usleep(500);
     return (0);
 }
