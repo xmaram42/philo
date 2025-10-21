@@ -30,8 +30,9 @@ void print_state(t_philo *philo, char *msg)
     long long tmstmp = get_time_ms() - philo->data->start_time;
 
     pthread_mutex_lock(&philo->data->print_lock);
-    if (!philo->data->stop)
-        printf("%lld %d %s\n", tmstmp, philo->id, msg);
+if (!philo->data->stop || ft_strcmp(msg, "died 💀") == 0)
+    printf("%lld %d %s\n", tmstmp, philo->id, msg);
+
     pthread_mutex_unlock(&philo->data->print_lock);
 }
 

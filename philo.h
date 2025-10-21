@@ -41,4 +41,5 @@ void	*philo_routine(void *ar);
 void	*monitor(void *ar);
 void cleanup_data(t_data *data);
 void print_state (t_philo *philo, char *msg);
+int	ft_strcmp(char *s1, char *s2);
 #endif

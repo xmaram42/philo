@@ -16,6 +16,7 @@ int init_data(t_data *data)
     int i;
 
     i = 0;
+    data->stop = 0;
     data->start_time = get_time_ms();
     data->forks = malloc(sizeof(pthread_mutex_t) * data->n);
     if(!data->forks)
