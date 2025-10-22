@@ -1,84 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maram <maram@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 14:41:14 by maram             #+#    #+#             */
+/*   Updated: 2025/10/22 15:07:30 by maram            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-int validate_args(int ac, char **av)
+int	start_threads(t_data *d)
 {
-    int i;
-    int j;
+	int	i;
 
-    if (ac != 5 && ac != 6)
-    {
-        printf("Error: wrong number of arguments\n");
-        return (1);
-    }
-    i = 1;
-    while (i < ac)
-    {
-        j = 0;
-        while (av[i][j])
-        {
-            if (av[i][j] < '0' || av[i][j] > '9')
-            {
-                printf("Error: invalid character in argument %d\n", i);
-                return (1);
-            }
-            j++;
-        }
-        i++;
-    }
-    return (0);
+	i = 0;
+	while (i < (int)d->n)
+	{
+		d->philos[i].last_meal = d->start_time;
+		if (pthread_create(&d->philos[i].thread, NULL,
+				philo_routine, &d->philos[i]) != 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-int parse_args(int ac, char **av, t_data *data)
+void	join_threads(t_data *d)
 {
-    data->n = ft_atoi(av[1]);
-    data->die = ft_atoi(av[2]);
-    data->eat = ft_atoi(av[3]);
-    data->sleep = ft_atoi(av[4]);
-    if (ac == 6)
-        data->must_eat = ft_atoi(av[5]);
-    else
-        data->must_eat = -1;
-    if (data->n <= 0 || data->die <= 0 || data->eat <= 0 || data->sleep <= 0)
-    {
-        printf("Error: arguments must be greater than 0\n");
-        return (1);
-    }
-    return (0);
+	int	i;
+
+	i = 0;
+	while (i < (int)d->n)
+		pthread_join(d->philos[i++].thread, NULL);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_data      data;
-    pthread_t   monitor_thread;
-    int         i;
+	t_data		data;
+	pthread_t	monitor_thread;
 
-    if (validate_args(ac, av))
-        return (1);
-    if (parse_args(ac, av, &data))
-        return (1);
-    if (init_data(&data))
-        return (printf("Error initializing data\n"), 1);
-		data.start_time = get_time_ms();
-    i = 0;
-    while (i < (int)data.n)
-    {
-        data.philos[i].last_meal = data.start_time;
-        i++;
-    }
-    i = 0;
-    while (i < (int)data.n)
-    {
-        pthread_create(&data.philos[i].thread, NULL, philo_routine, &data.philos[i]);
-        i++;
-    }
-    pthread_create(&monitor_thread, NULL, monitor, &data);
-    pthread_join(monitor_thread, NULL);
-    i = 0;
-    while (i < (int)data.n)
-    {
-        pthread_join(data.philos[i].thread, NULL);
-        i++;
-    }
-    cleanup_data(&data);
-    return (0);
+	if (validate_args(ac, av) || parse_args(ac, av, &data))
+		return (1);
+	if (init_data(&data))
+		return (printf("Error initializing data\n"), 1);
+	data.start_time = get_time_ms();
+	if (start_threads(&data))
+		return (printf("Thread creation failed\n"), 1);
+	pthread_create(&monitor_thread, NULL, monitor, &data);
+	pthread_join(monitor_thread, NULL);
+	join_threads(&data);
+	cleanup_data(&data);
+	return (0);
 }
