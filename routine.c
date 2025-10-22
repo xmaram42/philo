@@ -81,11 +81,12 @@ void	*philo_routine(void *ar)
 	if (philo->left_fork == philo->right_fork)
 	{
 		print_state(philo, "is thinking 💭");
-		handle_single_philo(philo);
-		return (NULL);
+		return (handle_single_philo(philo), NULL);
 	}
 	if (philo->id % 2 == 0)
 		usleep_ms(philo->data->eat / 2);
+	else if (philo->data->n % 2 != 0)
+		usleep_ms(philo->data->eat);
 	while (!simulation_stopped(philo->data))
 	{
 		print_state(philo, "is thinking 💭");
@@ -95,6 +96,8 @@ void	*philo_routine(void *ar)
 		usleep_ms(philo->data->sleep);
 		if (philo->data->n % 2 == 0)
 			usleep_ms(1);
+		else
+			usleep_ms(philo->data->eat);
 	}
 	return (NULL);
 }
