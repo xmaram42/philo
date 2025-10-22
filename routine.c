@@ -113,7 +113,6 @@ int eat_meal(t_philo *philo)
 }
 
 
-
 void	*philo_routine(void *ar)
 {
 	t_philo	*philo;
@@ -135,13 +134,10 @@ void	*philo_routine(void *ar)
 			break ;
 		if (!eat_meal(philo))
 			break ;
-		print_state(philo, "is sleeping 😴");
-		usleep_ms(philo->data->sleep, philo->data);
-		if (philo->data->n % 2 == 0)
-			usleep_ms(1, philo->data);
-
-		else
-			usleep_ms(philo->data->eat, philo->data);
+                print_state(philo, "is sleeping 😴");
+                usleep_ms(philo->data->sleep, philo->data);
+                if (philo->data->n % 2 == 0)
+                        usleep_ms(1, philo->data);
 	}
 	if (philo->holding_right)
 	{
@@ -155,3 +151,4 @@ void	*philo_routine(void *ar)
 	}
 	return (NULL);
 }
+
