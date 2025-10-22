@@ -28,14 +28,18 @@ int	start_threads(t_data *d)
 	return (0);
 }
 
-void	join_threads(t_data *d)
+void	join_threads(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i < (int)d->n)
-		pthread_join(d->philos[i++].thread, NULL);
+	while (i < (int)data->n)
+	{
+		pthread_join(data->philos[i].thread, NULL);
+		i++;
+	}
 }
+
 
 int	main(int ac, char **av)
 {

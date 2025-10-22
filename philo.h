@@ -44,6 +44,8 @@ struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	int			holding_left;
+	int			holding_right;
 	t_data			*data;
 	pthread_mutex_t	meal_lock;
 };
@@ -59,5 +61,7 @@ void				*monitor(void *ar);
 int 				usleep_ms(unsigned long long time, t_data *data);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_isdigit(int c);
+int 				take_forks(t_philo *philo);
+int 				eat_meal(t_philo *philo);
 int					ft_atoi(const char *str);
 #endif

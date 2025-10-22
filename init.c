@@ -49,6 +49,8 @@ int	init_philos(t_data *d)
 		d->philos[i].meals = 0;
 		d->philos[i].last_meal = d->start_time;
 		d->philos[i].data = d;
+		d->philos[i].holding_left = 0;
+		d->philos[i].holding_right = 0;
 		d->philos[i].left_fork = &d->forks[i];
 		d->philos[i].right_fork = &d->forks[(i + 1) % d->n];
 		pthread_mutex_init(&d->philos[i++].meal_lock, NULL);
