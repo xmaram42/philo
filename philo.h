@@ -56,7 +56,7 @@ int					simulation_stopped(t_data *data);
 void				*philo_routine(void *ar);
 void				print_state(t_philo *philo, char *msg);
 void				*monitor(void *ar);
-int					usleep_ms(unsigned long long time);
+int 				usleep_ms(unsigned long long time, t_data *data);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_isdigit(int c);
 int					ft_atoi(const char *str);

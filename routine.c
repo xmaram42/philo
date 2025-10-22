@@ -16,7 +16,7 @@ void	handle_single_philo(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	print_state(philo, "has taken a fork 🍴");
-	usleep_ms(philo->data->die);
+	usleep_ms(philo->data->die,  philo->data);
 	pthread_mutex_unlock(philo->left_fork);
 }
 
@@ -61,17 +61,22 @@ void	take_forks(t_philo *philo)
 	print_state(philo, "has taken a fork 🍴");
 }
 
-void	eat_meal(t_philo *philo)
+void eat_meal(t_philo *philo)
 {
 	print_state(philo, "is eating 🍝");
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = get_time_ms();
 	philo->meals++;
 	pthread_mutex_unlock(&philo->meal_lock);
-	usleep_ms(philo->data->eat);
+
+	usleep_ms(philo->data->eat, philo->data);
+
+	// ✅ تأكدي دائمًا من فك الشوك حتى لو توقفت المحاكاة
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 }
+
+
 
 void	*philo_routine(void *ar)
 {
@@ -84,20 +89,21 @@ void	*philo_routine(void *ar)
 		return (handle_single_philo(philo), NULL);
 	}
 	if (philo->id % 2 == 0)
-		usleep_ms(philo->data->eat / 2);
+		usleep_ms(philo->data->eat / 2, philo->data);
 	else if (philo->data->n % 2 != 0)
-		usleep_ms(philo->data->eat);
+		usleep_ms(philo->data->eat, philo->data);
 	while (!simulation_stopped(philo->data))
 	{
 		print_state(philo, "is thinking 💭");
 		take_forks(philo);
 		eat_meal(philo);
 		print_state(philo, "is sleeping 😴");
-		usleep_ms(philo->data->sleep);
+		usleep_ms(philo->data->sleep, philo->data);
 		if (philo->data->n % 2 == 0)
-			usleep_ms(1);
+			usleep_ms(1, philo->data);
+
 		else
-			usleep_ms(philo->data->eat);
+			usleep_ms(philo->data->eat, philo->data);
 	}
 	return (NULL);
 }
