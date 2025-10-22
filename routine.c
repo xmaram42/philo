@@ -69,6 +69,9 @@ void	eat_meal(t_philo *philo)
 	philo->meals++;
 	pthread_mutex_unlock(&philo->meal_lock);
 	usleep_ms(philo->data->eat);
+	pthread_mutex_lock(&philo->meal_lock);
+	philo->last_meal = get_time_ms();
+	pthread_mutex_unlock(&philo->meal_lock);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 }
