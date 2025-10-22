@@ -126,8 +126,28 @@ static void	sync_start(t_philo *philo)
 		usleep_ms(philo->data->eat, philo->data);
 }
 
+static void	think(t_philo *philo)
+{
+	unsigned long long	wait;
+	long long		margin;
+
+	print_state(philo, "is thinking 💭");
+	if (philo->data->n % 2 == 0)
+		return ;
+	margin = (long long)philo->data->die
+		- (long long)philo->data->eat - (long long)philo->data->sleep;
+	if (margin <= 0)
+		return ;
+	wait = philo->data->eat;
+	if (wait > (unsigned long long)margin)
+		wait = margin;
+	usleep_ms(wait, philo->data);
+}
+
 static int	philo_cycle(t_philo *philo)
 {
+	think(philo);
+
 	print_state(philo, "is thinking 💭");
 	if (!take_forks(philo))
 		return (0);
