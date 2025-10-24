@@ -6,7 +6,7 @@
 /*   By: maram <maram@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:44:21 by maram             #+#    #+#             */
-/*   Updated: 2025/10/22 15:01:01 by maram            ###   ########.fr       */
+/*   Updated: 2025/10/24 18:55:21 by maram            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	int			holding_left;
-	int			holding_right;
 	t_data			*data;
 	pthread_mutex_t	meal_lock;
 };
@@ -58,10 +56,9 @@ int					simulation_stopped(t_data *data);
 void				*philo_routine(void *ar);
 void				print_state(t_philo *philo, char *msg);
 void				*monitor(void *ar);
-int 				usleep_ms(unsigned long long time, t_data *data);
+// int					usleep_ms(unsigned long long time);
+int	usleep_ms(unsigned long long time, t_data *data);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_isdigit(int c);
-int 				take_forks(t_philo *philo);
-int 				eat_meal(t_philo *philo);
 int					ft_atoi(const char *str);
 #endif

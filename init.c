@@ -6,7 +6,7 @@
 /*   By: maram <maram@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:40:34 by maram             #+#    #+#             */
-/*   Updated: 2025/10/22 14:53:19 by maram            ###   ########.fr       */
+/*   Updated: 2025/10/24 18:40:33 by maram            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 unsigned long long	get_time_ms(void)
 {
-	struct timeval		tv;
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000ULL) + (tv.tv_usec / 1000ULL));
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
 int	init_mutexes(t_data *d)
@@ -49,8 +49,6 @@ int	init_philos(t_data *d)
 		d->philos[i].meals = 0;
 		d->philos[i].last_meal = d->start_time;
 		d->philos[i].data = d;
-		d->philos[i].holding_left = 0;
-		d->philos[i].holding_right = 0;
 		d->philos[i].left_fork = &d->forks[i];
 		d->philos[i].right_fork = &d->forks[(i + 1) % d->n];
 		pthread_mutex_init(&d->philos[i++].meal_lock, NULL);
@@ -61,7 +59,6 @@ int	init_philos(t_data *d)
 int	init_data(t_data *d)
 {
 	d->stop = 0;
-	d->start_time = get_time_ms();
 	if (init_mutexes(d))
 		return (1);
 	if (init_philos(d))

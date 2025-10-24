@@ -6,7 +6,7 @@
 /*   By: maram <maram@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:41:48 by maram             #+#    #+#             */
-/*   Updated: 2025/10/22 14:41:55 by maram            ###   ########.fr       */
+/*   Updated: 2025/10/24 18:32:04 by maram            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	*monitor(void *ar)
 	{
 		if (check_all_philos(d))
 			break ;
-		usleep(500);
+		usleep(1000);
 	}
 	return (NULL);
 }
