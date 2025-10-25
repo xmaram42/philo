@@ -6,7 +6,7 @@
 /*   By: maram <maram@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:43:44 by maram             #+#    #+#             */
-/*   Updated: 2025/10/22 14:43:45 by maram            ###   ########.fr       */
+/*   Updated: 2025/10/25 18:30:27 by maram            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ int	validate_args(int ac, char **av)
 
 int	parse_args(int ac, char **av, t_data *data)
 {
-	data->n = ft_atoi(av[1]);
-	data->die = ft_atoi(av[2]);
-	data->eat = ft_atoi(av[3]);
-	data->sleep = ft_atoi(av[4]);
+	data->num_philo = ft_atoi(av[1]);
+	data->time_die = ft_atoi(av[2]);
+	data->time_eat = ft_atoi(av[3]);
+	data->time_sleep = ft_atoi(av[4]);
 	if (ac == 6)
-		data->must_eat = ft_atoi(av[5]);
+		data->num_eat = ft_atoi(av[5]);
 	else
-		data->must_eat = -1;
-	if (data->n <= 0 || data->die <= 0
-		|| data->eat <= 0 || data->sleep <= 0)
+		data->num_eat = -1;
+	if (data->num_philo <= 0 || data->time_die <= 0
+		|| data->time_eat <= 0 || data->time_sleep <= 0)
 	{
 		printf("Error: arguments must be greater than 0\n");
 		return (1);
